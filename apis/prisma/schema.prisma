@@ -1,0 +1,848 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_POOLED_URL")
+  directUrl = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
+enum LegalEntityType {
+  PERSONA_FISICA
+  PERSONA_MORAL
+}
+
+enum BusinessActivityType {
+  FOOD_AND_BEVERAGES
+  RETAIL
+  HEALTH_AND_BEAUTY
+  TECHNOLOGY_AND_ELECTRONICS
+  ENTERTAINMENT_AND_GAMES
+  SERVICES
+  OTHER
+}
+
+model User {
+  id          String   @id @default(dbgenerated("gen_random_uuid()"))
+  email       String   @unique
+  firstName   String?
+  lastName    String?
+  phoneNumber String?
+  teamId      String?
+  role        UserRole @default(CUSTOMER)
+
+  createdProducts           Product[]
+  createdReconciliations    MachineReconciliation[]
+  createdTerminals          Machine[]
+  memberships               TeamMember[]
+  userMachines              UserMachine[]
+  password                  UserPassword?
+  passwordResetTokens       PasswordResetToken[]
+  totp                      UserTOTP?
+  approvedInvoices          Invoice[]                   @relation("ApprovedInvoices")
+  rejectedInvoices          Invoice[]                   @relation("RejectedInvoices")
+  cancelledInvoices         Invoice[]                   @relation("CancelledInvoices")
+  teamOnboardingTaskHistory TeamOnboardingTaskHistory[]
+  emailLogs                 EmailLog[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  @@index([phoneNumber])
+  @@map("users")
+}
+
+model UserPassword {
+  userId String @id
+  hash   String
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@map("user_passwords")
+}
+
+model PasswordResetToken {
+  id     String @id @default(dbgenerated("gen_random_uuid()"))
+  userId String
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  expiresAt DateTime  @db.Timestamptz()
+  usedAt    DateTime? @db.Timestamptz()
+
+  @@map("password_reset_tokens")
+}
+
+model UserTOTP {
+  userId   String  @id
+  secret   String
+  isActive Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@map("user_totps")
+}
+
+enum TeamDocumentType {
+  BUSINESS_OPERATION_PROOF
+  LEGAL_REPRESENTATIVE_ID
+  TAX_SITUATION
+  ARTICLES_OF_INCORPORATION
+  PUBLIC_REGISTRY_REGISTRATION
+  LEGAL_ENTITY_TAX_SITUATION
+  LEGAL_ENTITY_PROOF_OF_ADDRESS
+  LEGAL_ENTITY_BANK_STATEMENT
+  SIGNED_CONTRACT // Add this new type
+}
+
+enum EmailType {
+  PASSWORD_RESET
+  TEAM_WELCOME
+  PAYMENT_REMINDER
+  DOCUMENT_NOTIFICATION
+}
+
+enum EmailStatus {
+  SUCCESS
+  FAILED
+}
+
+model Team {
+  id                        String           @id @default(dbgenerated("gen_random_uuid()"))
+  slug                      String           @unique
+  name                      String
+  legalEntityType           LegalEntityType?
+  totalTerminals            Int?
+  machineModelBrand         String?
+  terminalSerialDigits      String?
+  pharosMerchantCode        String?
+  costPerMachineCents       Int              @default(1200)
+  website                   String?
+  productServiceDescription String?
+  legalRepresentativeName   String? // Added new field for legal representative name
+  onboardingCompleted       Boolean          @default(false)
+  electronicSignature       Bytes? // To store the signature as binary data
+  contactNumber             String?
+  facturamaId               String? // Facturama client ID for invoicing
+  isArchived                Boolean          @default(false)
+
+  members              TeamMember[]
+  machines             Machine[]
+  products             Product[]
+  invoices             Invoice[]
+  businessActivities   TeamBusinessActivity[]
+  documents            TeamDocument[]
+  onboardingTasks      TeamOnboardingTask[]
+  onboardingTaskHistoy TeamOnboardingTaskHistory[]
+  emailLogs            EmailLog[]
+  terminals            Terminal[]
+  experimentTeams      ExperimentTeam[]
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  ApiKeys   ApiKeys[]
+  Route     Route[]
+
+  @@map("teams")
+}
+
+model TeamDocument {
+  id       String           @id @default(dbgenerated("gen_random_uuid()"))
+  teamId   String
+  type     TeamDocumentType
+  fileUrl  String
+  fileName String
+  fileSize Int
+  fileType String
+
+  team Team @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  @@index([teamId, type])
+  @@map("team_documents")
+}
+
+model TeamBusinessActivity {
+  id         String               @id @default(dbgenerated("gen_random_uuid()"))
+  teamId     String
+  type       BusinessActivityType
+  customName String? // For "OTHER" type
+
+  team Team @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@unique([teamId, type])
+  @@map("team_business_activities")
+}
+
+enum TeamMemberRole {
+  OWNER
+  OPERATOR
+}
+
+model TeamMember {
+  userId         String
+  teamId         String
+  role           TeamMemberRole @default(OPERATOR)
+  showFinancials Boolean        @default(true)
+
+  user User @relation(fields: [userId], references: [id])
+  team Team @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@id([userId, teamId])
+  @@index([userId])
+  @@index([teamId])
+  @@index([role, teamId])
+  @@map("team_members")
+}
+
+model UserMachine {
+  userId    String
+  machineId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  machine Machine @relation(fields: [machineId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@id([userId, machineId])
+  @@index([userId])
+  @@index([machineId])
+  @@map("user_machines")
+}
+
+enum MachineProtocol {
+  DEX
+  MDB
+}
+
+enum TerminalFlowType {
+  A
+  B
+  C
+
+  @@map("terminal_flow_types")
+}
+
+enum TerminalLanguage {
+  ES
+  EN
+
+  @@map("terminal_languages")
+}
+
+enum TerminalType {
+  VENDING
+  PARKING
+  MICROMARKET
+}
+
+model Terminal {
+  id           String  @id @default(dbgenerated("gen_random_uuid()"))
+  serialNumber String  @unique
+  description  String?
+  teamId       String? // @deprecated
+
+  // shared attributes
+  pharosTerminalCode String
+  pharosMerchantCode String
+  type               TerminalType     @default(VENDING)
+  flowType           TerminalFlowType @default(A)
+  rsa                String?
+  ksn                String?
+
+  // parking related attributes
+  username             String?
+  password             String?
+  endpointUrl          String?
+  fixedComissionCents  Int?
+  percentageCommission Decimal?
+  extra1               String?
+  extra2               String?
+
+  // vending related attributes
+  initialCredit         Int              @default(0)
+  language              TerminalLanguage @default(ES)
+  acceptCreditPayments  Boolean          @default(true)
+  acceptCashPayments    Boolean          @default(true)
+  acceptServicePayments Boolean          @default(false)
+  decimalMode           Decimal          @default(1)
+  nip                   String?
+  key                   String?
+
+  team Team? @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@map("terminals")
+}
+
+enum MachineType {
+  VENDING
+  MICROMARKET
+}
+
+model Machine {
+  id                     String          @id @default(dbgenerated("gen_random_uuid()"))
+  name                   String
+  teamId                 String
+  createdById            String
+  terminalSerialNumber   String?         @unique
+  tubesTotal             Int?
+  machineModel           String?
+  machineSerial          String?
+  machineVersion         String?
+  isRemoteSaleEnabled    Boolean         @default(false) // @deprecated
+  remoteSaleEnabledUntil DateTime?
+  pharosTerminalCode     String?
+  lat                    Float?
+  lon                    Float?
+  protocol               MachineProtocol @default(DEX)
+  activeUntilDate        DateTime        @default(now()) @db.Date()
+  isEnabled              Boolean         @default(true)
+  versionCode            String?
+  type                   MachineType     @default(VENDING)
+
+  sales           Sale[]
+  dexReports      DexReport[]
+  spirals         MachineSpiral[]
+  picklists       MachinePicklist[]
+  reconciliations MachineReconciliation[]
+  routes          RouteMachine[]
+  incidents       Incident[]
+  userMachines    UserMachine[]
+  invoiceItems    InvoiceItem[]
+  team            Team                    @relation(fields: [teamId], references: [id])
+  createdBy       User                    @relation(fields: [createdById], references: [id])
+
+  createdAt  DateTime  @default(now()) @db.Timestamptz()
+  updatedAt  DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  lastPingAt DateTime? @db.Timestamptz()
+  deletedAt  DateTime? @db.Timestamptz()
+
+  @@index([terminalSerialNumber])
+  @@index([teamId, terminalSerialNumber])
+  @@index([teamId, deletedAt, activeUntilDate])
+  @@index([teamId, deletedAt, isEnabled])
+  @@index([activeUntilDate, teamId])
+  @@map("machines")
+}
+
+model Incident {
+  id               String    @id @default(dbgenerated("gen_random_uuid()"))
+  machineId        String
+  message          String
+  resolvedAt       DateTime? @db.Timestamptz()
+  resolvedByUserId String?
+
+  // relationships
+  machine Machine @relation(fields: [machineId], references: [id])
+
+  // timestamps
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@index([machineId, createdAt])
+  @@index([resolvedAt])
+  @@map("incidents")
+}
+
+model MachineReconciliation {
+  id                       String  @id @default(dbgenerated("gen_random_uuid()"))
+  cashBoxValueCents        BigInt // captured cash box value in cents
+  reconciliationValueCents Int // difference since the previous reconciliation
+  machineId                String
+  createdByUserId          String
+  isReset                  Boolean @default(false)
+
+  machine Machine @relation(fields: [machineId], references: [id])
+
+  createdAt     DateTime @default(now()) @db.Timestamptz()
+  createdByUser User     @relation(fields: [createdByUserId], references: [id])
+
+  @@index([machineId, createdAt])
+  @@map("machine_reconciliations")
+}
+
+model Product {
+  id                String  @id @default(dbgenerated("gen_random_uuid()"))
+  name              String
+  priceCents        Int
+  teamId            String
+  createdById       String
+  sku               String?
+  barcode           String?
+  purchaseCostCents Int? // Cost of the product for expense tracking
+
+  sales         Sale[]
+  spirals       MachineSpiral[]
+  productImages ProductImage[]
+  createdBy     User            @relation(fields: [createdById], references: [id])
+  team          Team            @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime   @default(now()) @db.Timestamptz()
+  updatedAt DateTime   @default(now()) @updatedAt @db.Timestamptz()
+  deletedAt DateTime?  @db.Timestamptz()
+  SaleItem  SaleItem[]
+
+  @@index([teamId, deletedAt])
+  @@index([teamId, deletedAt, createdAt])
+  @@index([createdAt, teamId])
+  @@map("products")
+}
+
+model ProductImage {
+  id        String @id @default(dbgenerated("gen_random_uuid()"))
+  productId String
+  fileUrl   String
+  fileName  String
+  fileSize  Int
+  position  Int    @default(1)
+
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  @@index([productId, deletedAt])
+  @@index([productId, position])
+  @@map("product_images")
+}
+
+model MachineSpiral {
+  id                     String  @id @default(dbgenerated("gen_random_uuid()"))
+  machineId              String
+  machineCode            String? // the code of the spiral within the machine in case of DEX
+  machineMdbCode         String? // the code of the spiral within the machine in case of MDB
+  machineMicromarketCode String? // the code of the product when using a micro market machine
+  maxCapacity            Int // the maximum capacity of the spiral
+  productId              String? // the product id from TERPA
+  currentCount           Int     @default(0) // the current count of the product in the spiral
+
+  picklistItems PicklistItem[]
+  machine       Machine        @relation(fields: [machineId], references: [id])
+  product       Product?       @relation(fields: [productId], references: [id])
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  @@unique([machineId, machineCode]) // A spiral's machine code can't be repeated
+  @@unique([machineId, machineMdbCode]) // A spiral's machine mdb code can't be repeated
+  @@index([machineId]) // Index to query spirals by machine
+  @@index([machineId, deletedAt])
+  @@index([productId, deletedAt])
+  @@index([machineId, deletedAt, productId])
+  @@map("machine_spirals")
+}
+
+model MachinePicklist {
+  id          String    @id @default(dbgenerated("gen_random_uuid()"))
+  machineId   String
+  fulfilledAt DateTime? @db.Timestamptz()
+
+  items   PicklistItem[]
+  machine Machine        @relation(fields: [machineId], references: [id])
+
+  deletedAt DateTime? @db.Timestamptz()
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
+
+  @@map("machine_picklists")
+}
+
+model PicklistItem {
+  id              String @id @default(dbgenerated("gen_random_uuid()"))
+  picklistId      String
+  machineSpiralId String
+  quantity        Int
+
+  picklist      MachinePicklist @relation(fields: [picklistId], references: [id])
+  machineSpiral MachineSpiral   @relation(fields: [machineSpiralId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@map("picklist_items")
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  FREE
+  REMOTE
+}
+
+enum SaleType {
+  PRODUCT
+  SERVICE
+  PHONE_RECHARGE
+}
+
+// Note on V1 vs V2 sales:
+// V1 sales were first, were on sale represented one product
+// V2 sales were introduced to support micro market, where one sale can have
+// multiple sale items.
+
+enum SaleVersion {
+  V1 // pre micro market
+  V2 // post micro market
+}
+
+model Sale {
+  id                  String         @id @default(dbgenerated("gen_random_uuid()"))
+  machineId           String
+  type                SaleType       @default(PRODUCT)
+  machineProductCost  Int
+  description         String         @default("") // for service and phone recharge
+  comission           Int?
+  serviceCharge       Int?
+  token               String?
+  machineProductId    String? // the machine product id in case of DEX
+  machineMdbProductId String? // the machine product id in case of MDB
+  productId           String?
+  productName         String? // only present if productId is present
+  productPriceCents   Int? // only present if productId is present
+  productSku          String? // only present if productId is present
+  reportId            String?
+  paymentMethod       PaymentMethod?
+  // @deprecated
+  teacelServiceId     String? // if teacel applies
+  // new version
+  taecelServiceId     String?
+  // @deprecated
+  teacelTransactionId String? // if teacel applies
+  // new version
+  taecelTransactionId String?
+  // @deprecated
+  teacelApiResponse   String? // if teacel applies
+  // new version
+  taecelApiResponse   String?
+
+  version SaleVersion @default(V1) // v2 sales introduced sale items
+
+  rawPayload String? // if needed for debugging
+
+  machine   Machine    @relation(fields: [machineId], references: [id])
+  product   Product?   @relation(fields: [productId], references: [id])
+  saleItems SaleItem[] // introduced in v2
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  // We need receivedAt since createdAt corresponds to the
+  // sale's actual date when it happened in the terminal/pos.
+  receivedAt DateTime? @db.Timestamptz()
+
+  @@unique([token, machineId])
+  @@index([machineId, createdAt])
+  @@index([machineId, createdAt, paymentMethod])
+  @@index([createdAt, machineId])
+  @@index([paymentMethod, createdAt])
+  @@index([machineId, productId, createdAt])
+  @@index([productId, createdAt])
+  @@index([createdAt, paymentMethod, machineId])
+  @@map("sales")
+}
+
+// SaleItem
+// Introduced in Sale V2
+model SaleItem {
+  id                     String  @id @default(dbgenerated("gen_random_uuid()"))
+  saleId                 String
+  productId              String?
+  productName            String?
+  machineProductId       String? // the machine product id in case of DEX
+  machineMdbProductId    String? // the machine product id in case of MDB
+  machineMicromarketCode String? // the machine product id in case of Micro Market
+  productPriceCents      Int? // only present if productId is present
+  productSku             String? // only present if productId is present
+
+  product Product? @relation(fields: [productId], references: [id])
+  sale    Sale     @relation(fields: [saleId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@index([saleId])
+  @@map("sale_items")
+}
+
+model DexReport {
+  reportId  String @id
+  machineId String
+
+  machine Machine @relation(fields: [machineId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@index([machineId, createdAt])
+  @@index([createdAt, machineId])
+  @@map("dex_reports")
+}
+
+model Route {
+  id            String         @id @default(dbgenerated("gen_random_uuid()"))
+  name          String
+  routeMachines RouteMachine[]
+  teamId        String
+
+  team Team @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  @@map("routes")
+}
+
+model RouteMachine {
+  routeId   String
+  machineId String
+
+  route   Route   @relation(fields: [routeId], references: [id])
+  machine Machine @relation(fields: [machineId], references: [id])
+
+  @@id([routeId, machineId])
+  @@unique([routeId, machineId])
+  @@map("route_machines")
+}
+
+model ApiKeys {
+  id       String  @id @default(dbgenerated("gen_random_uuid()"))
+  value    String  @unique
+  isActive Boolean @default(true)
+  teamId   String
+
+  team Team @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@map("api_keys")
+}
+
+enum InvoiceStatus {
+  PAYMENT_PENDING
+  PAYMENT_VERIFICATION_PENDING
+  PAYMENT_VERIFICATION_REJECTED
+  PAYMENT_SUCCESS
+  CANCELLED
+}
+
+enum InvoicePaymentMethod {
+  MANUAL
+  MERCADOPAGO
+}
+
+enum CfdiStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum ManualPaymentMethod {
+  BANK_TRANSFER
+  CASH
+}
+
+model Invoice {
+  id                  String                @id @default(dbgenerated("gen_random_uuid()"))
+  teamId              String
+  status              InvoiceStatus         @default(PAYMENT_PENDING)
+  paymentMethod       InvoicePaymentMethod?
+  subtotalCents       Int // Original total before VAT
+  vatRatePercent      Float                 @default(16.0) // Store VAT rate (16.0)
+  vatAmountCents      Int // VAT amount in cents
+  totalPriceCents     Int // Now this will be subtotal + VAT
+  exchangeRate        Float
+  adjustedAmountCents Int? // The final amount in cents adjusted by an admin during approval
+
+  paymentProofUrl       String?
+  mercadoPagoPaymentUrl String?
+  mercadoPagoPaymentId  String?
+  manualPaymentMethod   ManualPaymentMethod?
+  approvedByUserId      String?
+  approvedAt            DateTime?            @db.Timestamptz()
+  rejectedByUserId      String?
+  rejectedAt            DateTime?            @db.Timestamptz()
+  cancelledByUserId     String?
+  cancelledAt           DateTime?            @db.Timestamptz()
+
+  team         Team          @relation(fields: [teamId], references: [id])
+  approvedBy   User?         @relation("ApprovedInvoices", fields: [approvedByUserId], references: [id])
+  rejectedBy   User?         @relation("RejectedInvoices", fields: [rejectedByUserId], references: [id])
+  cancelledBy  User?         @relation("CancelledInvoices", fields: [cancelledByUserId], references: [id])
+  invoiceItems InvoiceItem[]
+  cfdi         InvoiceCfdi?
+
+  paidAt    DateTime? @db.Timestamptz()
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
+
+  @@index([status])
+  @@index([teamId])
+  @@index([status, teamId])
+  @@index([createdAt])
+  @@map("invoices")
+}
+
+model InvoiceCfdi {
+  id           String     @id @default(dbgenerated("gen_random_uuid()"))
+  invoiceId    String     @unique
+  facturamaId  String?
+  folio        String?
+  status       CfdiStatus @default(PENDING)
+  rawRequest   Json?
+  rawResponse  Json?
+  uuid         String?
+  errorMessage String?
+  createdAt    DateTime   @default(now()) @db.Timestamptz()
+  updatedAt    DateTime   @default(now()) @updatedAt @db.Timestamptz()
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("invoice_cfdis")
+}
+
+model InvoiceItem {
+  id             String   @id @default(dbgenerated("gen_random_uuid()"))
+  invoiceId      String
+  machineId      String
+  description    String?
+  subtotalCents  Int // Original price before VAT
+  vatAmountCents Int // VAT amount for this item
+  priceCents     Int // Now this will be subtotal + VAT
+  startDate      DateTime @db.Date()
+  endDate        DateTime @db.Date()
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
+  machine Machine @relation(fields: [machineId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@map("invoice_items")
+}
+
+model ExchangeRateHistory {
+  id           String @id @default(dbgenerated("gen_random_uuid()"))
+  fromCurrency String
+  toCurrency   String
+  rate         Float
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@index([createdAt])
+  @@map("exchange_rate_history")
+}
+
+model TeamOnboardingTask {
+  id        String   @id @default(dbgenerated("gen_random_uuid()"))
+  key       String
+  value     Boolean
+  teamId    String
+  team      Team     @relation(fields: [teamId], references: [id])
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@unique([teamId, key])
+  @@map("team_onboarding_tasks")
+}
+
+model TeamOnboardingTaskHistory {
+  id            String   @id @default(dbgenerated("gen_random_uuid()"))
+  key           String
+  previousValue Boolean
+  newValue      Boolean
+  createdAt     DateTime @default(now()) @db.Timestamptz()
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  teamId        String
+  team          Team     @relation(fields: [teamId], references: [id])
+
+  @@map("team_onboarding_task_history")
+}
+
+model EmailLog {
+  id             String      @id @default(dbgenerated("gen_random_uuid()"))
+  type           EmailType
+  status         EmailStatus
+  recipientEmail String
+  subject        String
+  body           String      @db.Text
+  errorDetails   String?     @db.Text
+  teamId         String?
+  userId         String?
+
+  team Team? @relation(fields: [teamId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@map("email_logs")
+}
+
+model FeatureFlag {
+  key       String  @id
+  isEnabled Boolean @default(false)
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@map("feature_flags")
+}
+
+model Experiment {
+  key      String  @id
+  isActive Boolean @default(false)
+  isGlobal Boolean @default(false)
+
+  experimentTeams ExperimentTeam[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@map("experiments")
+}
+
+model ExperimentTeam {
+  experimentId String
+  teamId       String
+
+  experiment Experiment @relation(fields: [experimentId], references: [key])
+  team       Team       @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+  @@id([experimentId, teamId])
+  @@index([teamId])
+  @@index([experimentId])
+  @@map("experiment_teams")
+}

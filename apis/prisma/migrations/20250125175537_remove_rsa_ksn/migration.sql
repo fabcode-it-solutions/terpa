@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "terminals" ALTER COLUMN "ksn" DROP NOT NULL,
+ALTER COLUMN "rsa" DROP NOT NULL;

@@ -1,0 +1,440 @@
+{
+  "app": {
+    "name": "Terpa Solutions",
+    "tagline": "Guarda. Lee. Crece."
+  },
+  "navigation": {
+    "tabs": {
+      "discover": "Descubrir",
+      "saves": "Guardados",
+      "settings": "Ajustes",
+      "dashboard": "Dashboard",
+      "machine": "Máquinas",
+      "products": "Productos",
+      "users": "Usuarios",
+      "billing": "Facturación"
+    }
+  },
+  "common": {
+    "ok": "Vale",
+    "cancel": "Cancelar",
+    "yes": "Sí",
+    "no": "No",
+    "save": "Guardar",
+    "delete": "Borrar",
+    "edit": "Editar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "logout": "Cerrar sesión",
+    "noData": "Sin datos"
+  },
+  "reports": "Reportes",
+  "billing": {
+    "tabs": { "summary": "Resumen", "history": "Historial de pagos" },
+    "filters": {
+      "year": "Año",
+      "month": "Mes",
+      "status": {
+        "title": "Estado",
+        "all": "Todos los estados",
+        "paid": "Pagado",
+        "pending": "Pendiente",
+        "unpaid": "Sin Pago"
+      }
+    },
+    "summary": {
+      "totalMachines": "Total de Máquinas",
+      "unpaid": "Sin Pago",
+      "table": { "machine": "Máquina", "period": "Período", "status": "Estado" }
+    },
+    "history": {
+      "table": {
+        "machine": "Máquina",
+        "period": "Período",
+        "invoice": "Factura",
+        "date": "Fecha",
+        "amount": "Monto",
+        "status": "Estado"
+      },
+      "empty": "No hay facturas en el historial",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "pageOf": "Página {{page}} de {{total}}"
+    }
+  },
+  "products": {
+    "searchPlaceholder": "Buscar productos...",
+    "error": "No se pudieron cargar los productos."
+  },
+  "users": {
+    "view": "Ver",
+    "searchPlaceholder": "Buscar usuarios...",
+    "empty": "No se encontraron usuarios",
+    "table": { "email": "Correo", "role": "Rol" }
+  },
+  "products.table": { "name": "Nombre", "price": "Precio", "sku": "SKU" },
+  "teams": { "title": "Equipos", "error": "No se pudieron cargar los equipos." },
+  "teams.slug": "Slug",
+  "teams.empty": "No se encontraron equipos",
+  "dashboard": {
+    "title": "Cuenta de demostración",
+    "salesCard": {
+      "title": "Ventas últimos 30 días",
+      "total": "Total ventas",
+      "card": "Tarjeta",
+      "cash": "Efectivo",
+      "free": "Gratis",
+      "remote": "Remoto"
+    },
+    "chart": {
+      "title": "Ventas por Día",
+      "caption": "Últimos 30 días",
+      "legend": { "card": "Tarjeta", "cash": "Efectivo", "free": "Gratis", "remote": "Remoto" }
+    },
+    "stats": {
+      "totalMachines": "Máquinas Totales",
+      "offline": "Sin Conexión",
+      "warning": "Intermitentes",
+      "online": "En Línea"
+    },
+    "lists": {
+      "topMachines": "Máquinas Con Más Ventas",
+      "topProducts": "Productos Más Vendidos",
+      "subtitle30d": "Últimos 30 días",
+      "viewMoreMachines": "Ver {{count}} más máquinas",
+      "viewMoreProducts": "Ver {{count}} más productos"
+    }
+  },
+  "machine": {
+    "title": "Máquina",
+    "tabs": {
+      "general": "General",
+      "sales": "Ventas",
+      "terminal": "Terminal",
+      "inventory": "Inventario"
+    },
+    "status": { "online": "En Línea", "offline": "Sin Conexión", "warning": "Intermitente" },
+    "metrics": { "salesToday": "Ventas Hoy", "change": "Cambio" },
+    "info": {
+      "title": "Información",
+      "model": "Modelo",
+      "version": "Versión",
+      "controller": "Controlador",
+      "terminal": "Terminal",
+      "apkVersion": "Versión APK",
+      "renew": "Renovar",
+      "vigencia": "Vigencia"
+    },
+    "chart": { "title": "Ventas por Día", "caption": "Últimos 30 días" },
+    "recentSales": {
+      "title": "Ventas Recientes",
+      "subtitle50": "Últimos 50 ventas",
+      "viewMore": "Ver {{count}} más ventas"
+    },
+    "topProducts": {
+      "title": "Productos Más Vendidos",
+      "subtitle30": "Últimos 30 días",
+      "viewMore": "Ver {{count}} más productos"
+    }
+  },
+  "sales": {
+    "columns": {
+      "product": "Producto",
+      "price": "Precio de venta",
+      "method": "Método de Pago",
+      "date": "Fecha"
+    },
+    "empty": "No se encontraron ventas para esta fecha",
+    "card": "Tarjeta",
+    "cash": "Efectivo",
+    "cardSales": "Ventas en tarjeta",
+    "cashSales": "Ventas en efectivo",
+    "total": "{{count}} ventas totales"
+  },
+  "terminal": {
+    "empty": "No se encontraron transacciones para esta fecha"
+  },
+  "inventory": {
+    "title": "Inventario",
+    "picklist": "Picklist",
+    "actions": "Acciones",
+    "error": "No se pudo cargar el inventario.",
+    "updateSuccess": "Espiral actualizado exitosamente",
+    "updateError": "Error al actualizar espiral"
+  },
+  "machineList": {
+    "error": "No se pudieron cargar las máquinas."
+  },
+  "machineDetail": {
+    "error": "No se pudieron cargar los detalles de la máquina."
+  },
+  "filter": {
+    "status": { "all": "Todos los estatus" }
+  },
+  "search": { "machinesPlaceholder": "Buscar máquinas..." },
+  "units": {
+    "salesCount": "{{count}} venta",
+    "salesCount_plural": "{{count}} ventas"
+  },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de vuelta",
+      "subtitle": "Inicia sesión para continuar",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "¿Has olvidado tu contraseña?",
+      "button": "Iniciar sesión",
+      "noAccount": "¿No tienes cuenta?",
+      "signUp": "Regístrate"
+    },
+    "totp": {
+      "title": "Verificación en dos pasos",
+      "subtitle": "Introduce el código de 6 dígitos de tu app de autenticación para finalizar el acceso.",
+      "emailLabel": "Verificando {{email}}",
+      "codeLabel": "Código de verificación",
+      "codePlaceholder": "Introduce el código de 6 dígitos",
+      "button": "Verificar código",
+      "changeAccount": "Usar otra cuenta",
+      "pendingAlertTitle": "Se requiere verificación en dos pasos",
+      "pendingAlertMessage": "Introduce tu código de autenticación para continuar.",
+      "errorTitle": "Error de verificación",
+      "genericError": "No pudimos verificar tu código. Inténtalo de nuevo.",
+      "noChallenge": "No hay verificación pendiente. Vuelve a iniciar sesión."
+    },
+    "signup": {
+      "title": "Bienvenido a Terpa Solutions",
+      "subtitle": "Crea tu cuenta para empezar",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "button": "Crear cuenta",
+      "submitting": "Creando cuenta...",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "logIn": "Iniciar sesión",
+      "legal": {
+        "agreement": "Al registrarte, aceptas nuestros",
+        "termsOfService": "Términos de Servicio",
+        "and": "y",
+        "privacyPolicy": "Política de Privacidad"
+      }
+    },
+    "authStart": {
+      "title": "Bienvenido a Terpa Solutions",
+      "subtitle": "Administra tus vending desde cualquier lugar",
+      "googleSignIn": "Continuar con Google",
+      "appleSignIn": "Continuar con Apple",
+      "emailSignIn": "Continuar con email",
+      "newHere": "¿Nuevo aquí?",
+      "button": "Crear una cuenta",
+      "loginError": "Error al iniciar sesión",
+      "getStarted": "Comenzar"
+    },
+    "connectExtension": {
+      "title": "Extensión conectada",
+      "message": "Tu extensión del navegador se ha conectado correctamente a Terpa Solutions. Ahora puedes guardar elementos directamente desde tu navegador."
+    }
+  },
+  "reader": {
+    "noArticleId": "No se ha proporcionado ID del artículo",
+    "afterReading": "Después de leer",
+    "favorited": "Añadido a favoritos",
+    "favorite": "Favorito",
+    "archive": "Archivar",
+    "unarchive": "Desarchivar",
+    "markAsRead": "Marcar como leído",
+    "markAsUnread": "Marcar como no leído",
+    "upNext": "A continuación",
+    "content": {
+      "extracting": "Se está extrayendo el contenido...",
+      "pageNotAvailable": "Página no disponible.",
+      "pageNoLongerAvailable": "Página ya no disponible.",
+      "contentTypeNotSupported": "Tipo de contenido no compatible.",
+      "contentBestViewedOnWeb": "Contenido mejor visto en la web.",
+      "paywallNotice": "Parece ser contenido de pago.",
+      "switchToWebView": "Cambiar a vista web",
+      "viewFullArticleOnWeb": "Ver artículo completo en la web",
+      "viewInWaybackMachine": "Ver en Wayback Machine",
+      "checkingArchive": "Verificando archivo...",
+      "noArchivedVersion": "No hay versión archivada disponible"
+    }
+  },
+  "errors": {
+    "network": "Error de red. Comprueba tu conexión e inténtalo de nuevo.",
+    "invalidCredentials": "Correo o contraseña no válidos. Inténtalo de nuevo.",
+    "unknown": "Algo ha ido mal. Inténtalo de nuevo.",
+    "validation": {
+      "required": "Este campo es obligatorio",
+      "minLength": "Debe tener al menos {{count}} caracteres",
+      "maxLength": "Debe tener como máximo {{count}} caracteres",
+      "email": {
+        "required": "El correo es obligatorio",
+        "invalid": "Introduce una dirección de correo válida"
+      },
+      "password": {
+        "required": "La contraseña es obligatoria",
+        "minLength": "La contraseña debe tener al menos 8 caracteres",
+        "complexity": "La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial"
+      },
+      "confirmPassword": {
+        "required": "Confirma tu contraseña",
+        "mismatch": "Las contraseñas no coinciden"
+      },
+      "totp": {
+        "required": "El código de autenticación es obligatorio",
+        "length": "El código de autenticación debe tener 6 dígitos"
+      }
+    }
+  },
+  "notFound": {
+    "title": "¡Vaya!",
+    "message": "Esta pantalla no existe.",
+    "goHome": "¡Ir a la pantalla principal!"
+  },
+  "home": {
+    "discover": "Descubrir"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "account": "Cuenta",
+    "notifications": "Notificaciones",
+    "language": "Idioma",
+    "logoutError": "Error al cerrar sesión",
+    "appearance": "Apariencia",
+    "importFromPocket": "Importar de Pocket",
+    "help": "Ayuda y soporte",
+    "about": "Acerca de",
+    "logout": "Cerrar sesión",
+    "logoutConfirmMessage": "¿Estás seguro de que quieres cerrar sesión?",
+    "deleteAccount": "Eliminar cuenta",
+    "deleteAccountConfirmMessage": "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer y eliminará permanentemente todos tus datos.",
+    "deleteAccountError": "Ocurrió un error al eliminar tu cuenta. Por favor, inténtalo de nuevo.",
+    "deletingAccount": "Eliminando tu cuenta..."
+  },
+  "import": {
+    "pocket": {
+      "title": "Importar de Pocket",
+      "description": "Conecta tu cuenta de Pocket para importar todos tus artículos guardados a Terpa Solutions. Este proceso:",
+      "benefits": {
+        "importArticles": "Importar todos tus guardados de Pocket",
+        "preserveProgress": "Conservar tus etiquetas y marcadores",
+        "keepAccount": "Mantendrá tu cuenta original de Pocket sin cambios"
+      },
+      "note": "Serás redirigido a Pocket para autorizar la importación. Es seguro — sólo leemos tus artículos guardados.",
+      "startImport": "Iniciar importación",
+      "notNow": "Ahora no",
+      "success": {
+        "title": "¡Importación iniciada!",
+        "description": "Tus datos de Pocket se están importando en segundo plano. Puede tardar unos minutos dependiendo de cuántos artículos tengas guardados.",
+        "note": "Puedes seguir usando Terpa Solutions con normalidad. Tus artículos importados aparecerán según se vayan procesando."
+      },
+      "done": "Hecho"
+    }
+  },
+  "addArticle": {
+    "title": "Añadir a Terpa Solutions",
+    "sectionTitle": "Añadir una URL",
+    "urlPlaceholder": "Introduce una URL para guardar",
+    "saveButton": "Guardar en Terpa Solutions",
+    "infoText": "Guarda artículos, vídeos y más para leer después. Todo se sincroniza entre tus dispositivos."
+  },
+  "emptyStates": {
+    "initialSync": {
+      "message": "Configurando tu Terpa Solutions",
+      "subMessage": "Estamos sincronizando tus artículos guardados. Puede tardar un momento."
+    },
+    "favorites": {
+      "message": "Aún no hay favoritos",
+      "subMessage": "Toca la estrella para guardar tus artículos favoritos aquí."
+    },
+    "tagged": {
+      "message": "Organiza con etiquetas",
+      "subMessage": "Añade etiquetas como 'viajes' o 'recetas' para organizar tus guardados."
+    },
+    "archived": {
+      "message": "Nada archivado",
+      "subMessage": "Cuando termines de leer, archiva los artículos para mantener el orden."
+    },
+    "short": {
+      "message": "Aún no hay lecturas cortas",
+      "subMessage": "Los artículos rápidos que guardes aparecerán aquí."
+    },
+    "long": {
+      "message": "Aún no hay lecturas largas",
+      "subMessage": "Los artículos extensos que guardes aparecerán aquí."
+    },
+    "default": {
+      "message": "¿Listo para empezar a guardar?",
+      "subMessage": "Guarda artículos que quieras leer después. Aparecerán aquí."
+    },
+    "all": {
+      "message": "¿Listo para empezar a guardar?",
+      "subMessage": "Guarda artículos que quieras leer después. Aparecerán aquí."
+    },
+    "allClear": {
+      "message": "¡Bien hecho!",
+      "subMessage": "Tu lista está despejada por ahora."
+    },
+    "discover": {
+      "message": "Nada que descubrir aún",
+      "subMessage": "Algo bueno está en camino. Mantente atento."
+    },
+    "restoring": {
+      "message": "Restaurando tus guardados",
+      "subMessage": "Tus artículos guardados están en camino."
+    }
+  },
+  "tags": {
+    "editTags": "Editar etiquetas",
+    "done": "Hecho",
+    "enterTagName": "Introduce un nombre de etiqueta",
+    "loadingTags": "Cargando etiquetas...",
+    "searchResults": "Resultados de búsqueda",
+    "noMatchingTags": "No se han encontrado etiquetas coincidentes",
+    "recentTags": "Etiquetas recientes",
+    "noRecentTags": "No se han encontrado etiquetas recientes",
+    "otherTags": "Otras etiquetas",
+    "noOtherTags": "No se han encontrado otras etiquetas"
+  },
+  "sort": {
+    "title": "Ordenar por",
+    "newest": "Más recientes primero",
+    "oldest": "Más antiguos primero",
+    "titleAZ": "Título (A-Z)",
+    "titleZA": "Título (Z-A)",
+    "shortest": "Más cortos primero",
+    "longest": "Más largos primero"
+  },
+  "menu": {
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "delete": "Borrar",
+    "edit": "Editar",
+    "share": "Compartir",
+    "favorite": "Favorito",
+    "unfavorite": "Quitar de favoritos",
+    "archive": "Archivar",
+    "unarchive": "Desarchivar",
+    "addTags": "Añadir etiquetas",
+    "removeTags": "Quitar etiquetas",
+    "markAsRead": "Marcar como leído",
+    "markAsUnread": "Marcar como no leído",
+    "editTags": "Editar etiquetas",
+    "openInBrowser": "Abrir en navegador",
+    "deleteConfirmation": {
+      "title": "Borrar artículo",
+      "message": "¿Estás seguro de que quieres borrar este artículo? Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Borrar"
+    }
+  },
+  "filters": {
+    "all": "Todos",
+    "favorites": "Favoritos",
+    "tagged": "Etiquetados",
+    "shortReads": "Lecturas cortas",
+    "longReads": "Lecturas largas",
+    "archived": "Archivados"
+  }
+}

@@ -1,0 +1,468 @@
+{
+  "app": {
+    "name": "Terpa Solutions",
+    "tagline": "Save. Read. Grow."
+  },
+  "navigation": {
+    "tabs": {
+      "discover": "Discover",
+      "dashboard": "Dashboard",
+      "settings": "Settings",
+      "machine": "Machine",
+      "products": "Products",
+      "users": "Users",
+      "billing": "Billing"
+    }
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "logout": "Logout",
+    "noData": "No data",
+    "saving": "Saving...",
+    "saved": "Saved to Terpa Solutions."
+  },
+  "reports": "Reports",
+  "billing": {
+    "tabs": { "summary": "Summary", "history": "Payment History" },
+    "filters": {
+      "year": "Year",
+      "month": "Month",
+      "status": {
+        "title": "Status",
+        "all": "All statuses",
+        "paid": "Paid",
+        "pending": "Pending",
+        "unpaid": "Unpaid"
+      }
+    },
+    "summary": {
+      "totalMachines": "Total Machines",
+      "unpaid": "Unpaid",
+      "table": { "machine": "Machine", "period": "Period", "status": "Status" }
+    },
+    "history": {
+      "table": {
+        "machine": "Machine",
+        "period": "Period",
+        "invoice": "Invoice",
+        "date": "Date",
+        "amount": "Amount",
+        "status": "Status"
+      },
+      "empty": "No invoices in history",
+      "prev": "Previous",
+      "next": "Next",
+      "pageOf": "Page {{page}} of {{total}}"
+    }
+  },
+  "products": {
+    "searchPlaceholder": "Search products...",
+    "error": "Failed to load products."
+  },
+  "users": {
+    "view": "View",
+    "searchPlaceholder": "Search users...",
+    "empty": "No users found",
+    "table": { "email": "Email", "role": "Role" }
+  },
+  "products.table": { "name": "Name", "price": "Price", "sku": "SKU" },
+  "teams": { "title": "Teams", "error": "Failed to load teams." },
+  "teams.slug": "Slug",
+  "teams.empty": "No teams found",
+  "auth": {
+    "login": {
+      "title": "Login Your Account",
+      "subtitle": "Sign in to continue",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot Password",
+      "button": "Login",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up"
+    },
+    "totp": {
+      "title": "Two-factor verification",
+      "subtitle": "Enter the 6-digit code from your authenticator app to finish signing in.",
+      "emailLabel": "Verifying {{email}}",
+      "codeLabel": "Authentication code",
+      "codePlaceholder": "Enter 6-digit code",
+      "button": "Verify code",
+      "changeAccount": "Use a different account",
+      "pendingAlertTitle": "Two-factor verification required",
+      "pendingAlertMessage": "Enter your authenticator code to continue.",
+      "errorTitle": "Verification failed",
+      "genericError": "We couldn't verify your code. Please try again.",
+      "noChallenge": "No verification is pending. Please sign in again."
+    },
+    "signup": {
+      "title": "Create Account",
+      "subtitle": "Create your account to get started",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "button": "Sign Up",
+      "submitting": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "logIn": "Login",
+      "legal": {
+        "agreement": "By signing up, you agree to our",
+        "termsOfService": "Terms of Service",
+        "and": "and",
+        "privacyPolicy": "Privacy Policy"
+      }
+    },
+    "authStart": {
+      "title": "Welcome to TERPA",
+      "subtitle": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "getStarted": "Get Started",
+      "googleSignIn": "Continue with Google",
+      "appleSignIn": "Continue with Apple",
+      "emailSignIn": "Continue with Email",
+      "newHere": "New here?",
+      "button": "Create an account",
+      "loginError": "Sign in failed"
+    },
+    "forgetpassword": {
+      "title": "Forget Password",
+      "subtitle": "Sign in to continue",
+      "email": "Email",
+      "button": "Reset Password",
+      "help": "Back to",
+      "login": "Login"
+    },
+    "passwordreset": {
+      "title": "Enter OTP",
+      "subtitle": "We sent a code to"
+    },
+    "newpassword": {
+      "title": "Reset Password",
+      "password": "New Password",
+      "confirmPassword": "Confirm Password",
+      "help": "Back to Login",
+      "button": "Submit",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up"
+    },
+    "connectExtension": {
+      "title": "Extension Connected",
+      "message": "Your browser extension has been successfully connected to Terpa Solutions. You can now save items directly from your browser."
+    }
+  },
+
+  "reader": {
+    "noArticleId": "No article ID provided",
+    "afterReading": "After Reading",
+    "favorited": "Favorited",
+    "favorite": "Favorite",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "markAsRead": "Mark as Read",
+    "markAsUnread": "Mark as Unread",
+    "upNext": "Up Next",
+    "content": {
+      "extracting": "Content is being extracted...",
+      "pageNotAvailable": "Page not available.",
+      "pageNoLongerAvailable": "Page no longer available.",
+      "contentTypeNotSupported": "Content type not supported.",
+      "contentBestViewedOnWeb": "Content best viewed on web.",
+      "paywallNotice": "This appears to be paywalled content.",
+      "switchToWebView": "Switch to web view",
+      "viewFullArticleOnWeb": "View full article on web",
+      "viewInWaybackMachine": "View in Wayback Machine",
+      "checkingArchive": "Checking archive...",
+      "noArchivedVersion": "No archived version available"
+    }
+  },
+  "errors": {
+    "network": "Network error. Please check your connection and try again.",
+    "invalidCredentials": "Invalid email or password. Please try again.",
+    "unknown": "Something went wrong. Please try again.",
+    "validation": {
+      "required": "This field is required",
+      "minLength": "Must be at least {{count}} characters",
+      "maxLength": "Must be at most {{count}} characters",
+      "email": {
+        "required": "Email is required",
+        "invalid": "Please enter a valid email address"
+      },
+      "password": {
+        "required": "Password is required",
+        "minLength": "Password must be at least 8 characters",
+        "complexity": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      },
+      "confirmPassword": {
+        "required": "Please confirm your password",
+        "mismatch": "Passwords do not match"
+      },
+      "totp": {
+        "required": "Authentication code is required",
+        "length": "Authentication code must be 6 digits"
+      }
+    }
+  },
+  "notFound": {
+    "title": "Oops!",
+    "message": "This screen doesn't exist.",
+    "goHome": "Go to home screen!"
+  },
+  "home": {
+    "discover": "Discover"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "notifications": "Notifications",
+    "language": "Language",
+    "logoutError": "Error during logout",
+    "appearance": "Appearance",
+    "importFromPocket": "Import from Pocket",
+    "help": "Help & Support",
+    "about": "About",
+    "logout": "Logout",
+    "logoutConfirmMessage": "Are you sure you want to sign out?",
+    "deleteAccount": "Delete Account",
+    "deleteAccountConfirmMessage": "Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data.",
+    "deleteAccountError": "An error occurred while deleting your account. Please try again.",
+    "deletingAccount": "Deleting your account..."
+  },
+  "profile": {
+    "name": "Name",
+    "email": "Email"
+  },
+  "import": {
+    "pocket": {
+      "title": "Import from Pocket",
+      "description": "Connect your Pocket account to import all your saved articles to Terpa Solutions. This process will:",
+      "benefits": {
+        "importArticles": "Import all your Pocket saves",
+        "preserveProgress": "Preserve your tags and highlights",
+        "keepAccount": "Keep your original Pocket account unchanged"
+      },
+      "note": "You'll be redirected to Pocket to authorize the import. This is secure — we only read your saved articles.",
+      "startImport": "Start Import",
+      "notNow": "Not now",
+      "success": {
+        "title": "Import Started!",
+        "description": "Your Pocket data is being imported in the background. This may take a few minutes depending on how many articles you have.",
+        "note": "You can continue using Terpa Solutions normally. Your imported articles will appear as they're processed."
+      },
+      "done": "Done"
+    }
+  },
+  "addArticle": {
+    "title": "Add to Terpa Solutions",
+    "sectionTitle": "Add a URL",
+    "urlPlaceholder": "Enter a URL to save",
+    "saveButton": "Save to Terpa Solutions",
+    "infoText": "Save articles, videos, and more to read later. Everything syncs across your devices."
+  },
+  "emptyStates": {
+    "initialSync": {
+      "message": "Setting up your Terpa Solutions",
+      "subMessage": "We're syncing your saved articles. This might take a moment."
+    },
+    "favorites": {
+      "message": "No favorites yet",
+      "subMessage": "Tap the star to save your favorite articles here."
+    },
+    "tagged": {
+      "message": "Organize with tags",
+      "subMessage": "Add tags like 'travel' or 'recipes' to organize your saves."
+    },
+    "archived": {
+      "message": "Nothing archived",
+      "subMessage": "When you're done reading, archive articles to keep things tidy."
+    },
+    "short": {
+      "message": "No short reads yet",
+      "subMessage": "Quick articles you save will appear here."
+    },
+    "long": {
+      "message": "No long reads yet",
+      "subMessage": "In-depth articles you save will appear here."
+    },
+    "default": {
+      "message": "Ready to start saving?",
+      "subMessage": "Save articles you want to read later. They'll appear here."
+    },
+    "all": {
+      "message": "Ready to start saving?",
+      "subMessage": "Save articles you want to read later. They'll appear here."
+    },
+    "allClear": {
+      "message": "Nicely done",
+      "subMessage": "Your list is clear for now."
+    },
+    "discover": {
+      "message": "Nothing to discover yet",
+      "subMessage": "Something good is on the way. Stay tuned."
+    },
+    "restoring": {
+      "message": "Restoring your saves",
+      "subMessage": "Your saved articles are on the way."
+    }
+  },
+  "tags": {
+    "editTags": "Edit Tags",
+    "done": "Done",
+    "enterTagName": "Enter a Tag Name",
+    "loadingTags": "Loading tags...",
+    "searchResults": "Search Results",
+    "noMatchingTags": "No matching tags found",
+    "recentTags": "Recent Tags",
+    "noRecentTags": "No recent tags found",
+    "otherTags": "Other Tags",
+    "noOtherTags": "No other tags found"
+  },
+  "sort": {
+    "title": "Sort By",
+    "newest": "Newest First",
+    "oldest": "Oldest First",
+    "titleAZ": "Title (A-Z)",
+    "titleZA": "Title (Z-A)",
+    "shortest": "Shortest First",
+    "longest": "Longest First"
+  },
+  "menu": {
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "share": "Share",
+    "favorite": "Favorite",
+    "unfavorite": "Unfavorite",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "addTags": "Add Tags",
+    "removeTags": "Remove Tags",
+    "markAsRead": "Mark as Read",
+    "markAsUnread": "Mark as Unread",
+    "editTags": "Edit Tags",
+    "openInBrowser": "Open in Browser",
+    "deleteConfirmation": {
+      "title": "Delete Article",
+      "message": "Are you sure you want to delete this article? This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    }
+  },
+  "filters": {
+    "all": "All",
+    "favorites": "Favorites",
+    "tagged": "Tagged",
+    "shortReads": "Short Reads",
+    "longReads": "Long Reads",
+    "archived": "Archived"
+  },
+  "dashboard": {
+    "title": "Demo Account",
+    "salesCard": {
+      "title": "Sales last 30 days",
+      "total": "Total sales",
+      "card": "Card",
+      "cash": "Cash",
+      "free": "Free",
+      "remote": "Remote"
+    },
+    "chart": {
+      "title": "Sales by Day",
+      "caption": "Last 30 days",
+      "legend": { "card": "Card", "cash": "Cash", "free": "Free", "remote": "Remote" }
+    },
+    "stats": {
+      "totalMachines": "Total Machines",
+      "offline": "Offline",
+      "warning": "Intermittent",
+      "online": "Online"
+    },
+    "lists": {
+      "topMachines": "Top Selling Machines",
+      "topProducts": "Top Selling Products",
+      "subtitle30d": "Last 30 days",
+      "viewMoreMachines": "View {{count}} more machines",
+      "viewMoreProducts": "View {{count}} more products"
+    }
+  },
+  "machine": {
+    "title": "Machine",
+    "tabs": {
+      "general": "General",
+      "sales": "Sales",
+      "terminal": "Terminal",
+      "inventory": "Inventory"
+    },
+    "status": { "online": "Online", "offline": "Offline", "warning": "Intermittent" },
+    "metrics": { "salesToday": "Sales Today", "change": "Change" },
+    "info": {
+      "title": "Information",
+      "model": "Model",
+      "version": "Version",
+      "controller": "Controller",
+      "terminal": "Terminal",
+      "apkVersion": "APK Version",
+      "renew": "Renew",
+      "vigencia": "Validity"
+    },
+    "chart": { "title": "Sales by Day", "caption": "Last 30 days" },
+    "recentSales": {
+      "title": "Recent Sales",
+      "subtitle50": "Last 50 sales",
+      "viewMore": "View {{count}} more sales"
+    },
+    "topProducts": {
+      "title": "Top Selling Products",
+      "subtitle30": "Last 30 days",
+      "viewMore": "View {{count}} more products"
+    }
+  },
+  "sales": {
+    "columns": {
+      "product": "Product",
+      "price": "Sale Price",
+      "method": "Payment Method",
+      "date": "Date"
+    },
+    "empty": "No sales found for this date",
+    "card": "Card",
+    "cash": "Cash",
+    "cardSales": "Card sales",
+    "cashSales": "Cash sales",
+    "total": "{{count}} total sales"
+  },
+  "terminal": {
+    "empty": "No transactions found for this date"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "picklist": "Picklist",
+    "actions": "Actions",
+    "error": "Failed to load inventory.",
+    "updateSuccess": "Spiral updated successfully",
+    "updateError": "Error updating spiral"
+  },
+  "filter": {
+    "status": { "all": "All statuses" }
+  },
+  "search": { "machinesPlaceholder": "Search machines..." },
+  "units": {
+    "salesCount": "{{count}} sale",
+    "salesCount_plural": "{{count}} sales"
+  },
+  "machineList": {
+    "error": "Failed to load machines."
+  },
+  "machineDetail": {
+    "error": "Failed to load machine details."
+  }
+}
