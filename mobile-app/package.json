@@ -5,7 +5,7 @@
   "author": "Terpa Solutions",
   "description": "Terpa Solutions mobile application",
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "node init && expo start --dev-client",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "ios": "expo run:ios",
